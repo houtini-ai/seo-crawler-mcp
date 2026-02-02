@@ -16,6 +16,7 @@ process.env.CRAWLEE_LOG_LEVEL = 'OFF';
  * Phase 2: Full crawling engine implementation ✅
  * Phase 3: SEO analysis layer ✅
  * Phase 4: Fixed RequestQueue persistence bug ✅
+ * Phase 5: Cross-platform output path support ✅
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -32,7 +33,7 @@ import { querySeoData } from './tools/query-seo-data.js';
 import { listQueries } from './tools/list-queries.js';
 
 const SERVER_NAME = 'seo-crawler-mcp';
-const SERVER_VERSION = '2.0.1'; // Version bump for storage cleanup fix
+const SERVER_VERSION = '2.1.0'; // Cross-platform output path support
 
 const tools: Tool[] = [
   {
@@ -252,6 +253,7 @@ class CrawleeMcpServer {
     console.error('✅ Phase 2: Crawling engine ready');
     console.error('✅ Phase 3: SEO analysis layer active');
     console.error('✅ Phase 4: RequestQueue bug fixed');
+    console.error('✅ Phase 5: Cross-platform paths');
   }
 }
 
