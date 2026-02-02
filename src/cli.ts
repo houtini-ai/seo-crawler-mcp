@@ -1,25 +1,32 @@
 #!/usr/bin/env node
 
 /**
- * SEO Crawler MCP - CLI Mode
+ * SEO Crawler MCP - Entry Point
  * 
- * Run crawls directly from terminal, then analyze with Claude via MCP
- * 
- * Usage:
- *   npx @houtini/seo-crawler-mcp crawl https://example.com --max-pages=100 --depth=3
- *   
- * Then in Claude:
- *   "Analyze the crawl at C:/seo-audits/example.com_2026-02-02_abc123"
+ * Detects mode automatically:
+ * - MCP mode (stdio): When run by Claude Desktop (no args) - launches MCP server
+ * - CLI mode: When run with arguments - executes CLI commands
  */
-
-import { runSeoAudit } from './tools/run-seo-audit.js';
-import { analyzeSeo } from './tools/analyze-seo.js';
-import { listQueries } from './tools/list-queries.js';
 
 const args = process.argv.slice(2);
 
-if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
-  console.log(`
+// If NO arguments provided, assume MCP mode (Claude Desktop calling via stdio)
+// If arguments provided, run in CLI mode
+if (args.length === 0 || (args.length === 1 && (args[0] === '--stdio' || args[0] === 'mcp'))) {
+  // MCP Server mode - delegate to index.ts
+  import('./index.js');
+} else {
+  // CLI mode - run commands
+  runCli();
+}
+
+async function runCli() {
+  const { runSeoAudit } = await import('./tools/run-seo-audit.js');
+  const { analyzeSeo } = await import('./tools/analyze-seo.js');
+  const { listQueries } = await import('./tools/list-queries.js');
+
+  if (args[0] === '--help' || args[0] === '-h') {
+    console.log(`
 SEO Crawler MCP - CLI Mode
 
 USAGE:
@@ -56,39 +63,38 @@ WORKFLOW:
   3. In Claude Desktop: "Analyze the crawl at <output-path>"
   4. Claude uses MCP tools to query the SQLite database
   `);
-  process.exit(0);
-}
+    process.exit(0);
+  }
 
-const command = args[0];
+  const command = args[0];
 
-function parseArgs(args: string[]): Record<string, any> {
-  const parsed: Record<string, any> = {};
-  
-  for (const arg of args) {
-    if (arg.startsWith('--')) {
-      const [key, value] = arg.substring(2).split('=');
-      const camelKey = key.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-      
-      if (value === undefined) {
-        parsed[camelKey] = true;
-      } else if (!isNaN(Number(value))) {
-        parsed[camelKey] = Number(value);
-      } else {
-        parsed[camelKey] = value;
-      }
-    } else if (!parsed.url && !parsed.crawlPath) {
-      if (command === 'crawl') {
-        parsed.url = arg;
-      } else if (command === 'analyze') {
-        parsed.crawlPath = arg;
+  function parseArgs(args: string[]): Record<string, any> {
+    const parsed: Record<string, any> = {};
+    
+    for (const arg of args) {
+      if (arg.startsWith('--')) {
+        const [key, value] = arg.substring(2).split('=');
+        const camelKey = key.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+        
+        if (value === undefined) {
+          parsed[camelKey] = true;
+        } else if (!isNaN(Number(value))) {
+          parsed[camelKey] = Number(value);
+        } else {
+          parsed[camelKey] = value;
+        }
+      } else if (!parsed.url && !parsed.crawlPath) {
+        if (command === 'crawl') {
+          parsed.url = arg;
+        } else if (command === 'analyze') {
+          parsed.crawlPath = arg;
+        }
       }
     }
+    
+    return parsed;
   }
-  
-  return parsed;
-}
 
-async function main() {
   try {
     switch (command) {
       case 'crawl': {
@@ -220,5 +226,3 @@ async function main() {
     process.exit(1);
   }
 }
-
-main();
