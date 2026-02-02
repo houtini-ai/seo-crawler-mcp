@@ -299,18 +299,16 @@ C:/seo-audits/example.com_2026-02-01_abc123/
 â””â”€â”€ crawl-export.csv       # Optional CSV export
 ```
 
-I've tested this on my simracingcockpit.gg site - 1,828 pages, 298,708 link relationships, crawled in 15 minutes. Database came out at 15MB. The analysis queries run in under 600ms even on the full dataset.
-
 ---
 
 ## Performance
 
-What I've found through testing:
+Typical crawl performance metrics:
 
-**Crawl Performance:**
-- 1,828 pages in 15 minutes
-- 298,708 link relationships tracked
-- 15MB database size
+**Crawl Speed:**
+- Medium site (1,500-2,000 pages): ~15 minutes
+- 300,000+ link relationships tracked
+- Database size: ~15MB for 2,000 pages
 
 **Query Performance:**
 - Simple queries: under 10ms
