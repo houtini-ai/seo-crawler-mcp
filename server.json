@@ -1,31 +1,36 @@
 {
-  "schema_version": "v0.1.0",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.houtini-ai/seo-crawler-mcp",
-  "description": "Crawl and analyse websites for SEO errors and issues using Crawlee with SQLite storage",
+  "description": "Crawl and analyse websites for SEO errors using Crawlee with SQLite storage",
+  "repository": {
+    "url": "https://github.com/houtini-ai/seo-crawler-mcp",
+    "source": "github"
+  },
   "version": "2.0.1",
-  "license": "Apache-2.0",
-  "sourceUrl": "https://github.com/houtini-ai/seo-crawler-mcp",
   "packages": [
     {
-      "type": "npm",
-      "name": "@houtini/seo-crawler-mcp",
-      "version": "2.0.1"
-    }
-  ],
-  "vendor": {
-    "name": "Houtini",
-    "url": "https://houtini.ai"
-  },
-  "environmentVariables": [
-    {
-      "name": "OUTPUT_DIR",
-      "description": "Directory where crawl results are saved",
-      "required": true
-    },
-    {
-      "name": "DEBUG",
-      "description": "Enable verbose debug logging (set to 'true' to enable)",
-      "required": false
+      "registryType": "npm",
+      "identifier": "@houtini/seo-crawler-mcp",
+      "version": "2.0.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "OUTPUT_DIR",
+          "description": "Directory where crawl results are saved",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": false
+        },
+        {
+          "name": "DEBUG",
+          "description": "Enable verbose debug logging (set to 'true' to enable)",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": false
+        }
+      ]
     }
   ]
 }
