@@ -4,6 +4,8 @@
  */
 
 import { randomUUID } from 'crypto';
+import path from 'path';
+import os from 'os';
 import { RunSeoAuditInputSchema } from '../schema/index.js';
 import type { RunSeoAuditInput, RunSeoAuditOutput, CrawlConfig } from '../types/index.js';
 import { UrlManager } from '../core/UrlManager.js';
@@ -28,7 +30,13 @@ export async function runSeoAudit(params: RunSeoAuditInput): Promise<RunSeoAudit
   const hostname = new URL(validated.url).hostname.replace(/^www\./, '');
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
   const folderName = `${hostname}_${timestamp}_${crawlId.slice(0, 8)}`;
-  const outputPath = `C:\\seo-audits\\${folderName}`;
+  
+  // Cross-platform output directory resolution
+  // Priority: OUTPUT_DIR env var > home directory fallback
+  const baseDir = process.env.OUTPUT_DIR || path.join(os.homedir(), 'seo-audits');
+  const outputPath = path.join(baseDir, folderName);
+  
+  debug('[MCP] Output path resolved:', outputPath);
   
   const config: CrawlConfig = {
     crawlId,
