@@ -32,7 +32,7 @@ import { querySeoData } from './tools/query-seo-data.js';
 import { listQueries } from './tools/list-queries.js';
 
 const SERVER_NAME = 'crawlee-mcp';
-const SERVER_VERSION = '2.0.1'; // Version bump for bug fix
+const SERVER_VERSION = '2.0.1'; // Version bump for storage cleanup fix
 
 const tools: Tool[] = [
   {

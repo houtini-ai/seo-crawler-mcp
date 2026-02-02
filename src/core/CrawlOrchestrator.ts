@@ -172,9 +172,18 @@ export class CrawlOrchestrator {
         message: error.message || 'Unknown error',
         timestamp: new Date().toISOString()
       });
+    } finally {
+      // CRITICAL: Clean up isolated storage to prevent state persistence between crawls
+      // This ensures each crawl starts with a fresh RequestQueue
+      if (this.memoryStorage) {
+        try {
+          await this.memoryStorage.purge();
+          console.error('[ORCH DEBUG] MemoryStorage cleaned up successfully');
+        } catch (cleanupError: any) {
+          console.error('[ORCH WARN] Storage cleanup failed:', cleanupError.message);
+        }
+      }
     }
-    // No explicit cleanup needed - MemoryStorage is garbage collected
-    // and Crawlee automatically purges default storages
     
     await this.storage.saveMetadata(this.metadata, this.config);
     return this.metadata;

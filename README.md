@@ -24,7 +24,7 @@ What's interesting is that MCP usually indicates a server connection of some sor
 
 Claude (or your AI assistant of choice) can orchestrate this entire stack through simple function calls. The crawl runs asynchronously, stores everything in SQLite, and then Claude can query that data through natural language - "analyse this crawl for seo opportunities" or "report on internal broken links" - and the MCP server translates that into sophisticated SQL analysis.
 
-You can also run it in terminal for larger crawls over 1000 pages.
+**You can also run crawls directly from the terminal** - perfect for large sites or background processing. The CLI mode lets you run a crawl, get the output directory, and then hand that over to Claude for AI-powered analysis via the MCP tools.
 
 ---
 
@@ -91,6 +91,74 @@ Then use the local path in your config:
 
 ---
 
+## CLI Mode (Terminal Usage)
+
+For large crawls or background processing, you can run crawls directly from the terminal:
+
+### Run a Crawl
+
+```bash
+# Basic crawl
+npx @houtini/crawlee-mcp crawl https://example.com
+
+# Large crawl with custom settings
+npx @houtini/crawlee-mcp crawl https://example.com --max-pages=5000 --depth=5
+
+# Using Googlebot user agent
+npx @houtini/crawlee-mcp crawl https://example.com --user-agent=googlebot
+```
+
+### Quick Analysis
+
+```bash
+# Show summary statistics
+npx @houtini/crawlee-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123
+
+# Detailed JSON output
+npx @houtini/crawlee-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123 --format=detailed
+```
+
+### List Available Queries
+
+```bash
+# All queries
+npx @houtini/crawlee-mcp queries
+
+# Security queries only
+npx @houtini/crawlee-mcp queries --category=security
+
+# Critical priority queries
+npx @houtini/crawlee-mcp queries --priority=CRITICAL
+```
+
+### Workflow: Terminal + Claude
+
+1. **Run large crawl from terminal** (runs in background, can close terminal)
+   ```bash
+   npx @houtini/crawlee-mcp crawl https://bigsite.com --max-pages=5000
+   ```
+
+2. **Get the output path** from the crawl results
+   ```
+   Output Path: C:\seo-audits\bigsite.com_2026-02-02T10-15-30_abc123
+   ```
+
+3. **In Claude Desktop, analyze with AI**
+   ```
+   Analyze the crawl at C:\seo-audits\bigsite.com_2026-02-02T10-15-30_abc123
+   Show me the critical issues
+   What are the biggest SEO problems?
+   Give me a detailed report on broken internal links
+   ```
+
+This workflow is perfect for:
+- Large sites (1000+ pages) where you want the crawl to run overnight
+- Multiple sites you want to crawl in batch
+- Automated crawling via cron jobs or scheduled tasks
+- Keeping terminal-based workflow whilst using Claude for intelligent analysis
+
+---
+
 ## How to Use This
 
 ### Complete SEO Audit
@@ -137,7 +205,7 @@ If you're specifically worried about security headers:
 
 ## What Gets Detected
 
-The analysis engine catches 25 out of 29 issues that Screaming Frog finds. Here's what that covers:
+The analysis engine includes 25 comprehensive SEO checks across five categories:
 
 ### Critical Issues (4 checks)
 - Missing title tags - pages without titles don't rank
@@ -219,14 +287,14 @@ The SQLite approach works well here. Everything stays local, no API rate limits 
 
 ## Limitations
 
-There are 4 Screaming Frog checks I haven't implemented yet:
+There are 4 additional checks planned for v3.0:
 
 - **Core Web Vitals** - requires Playwright for real browser metrics
 - **Robots.txt validation** - needs parser library
 - **Readability scoring** - requires text analysis library
 - **Mobile rendering issues** - needs device emulation
 
-These missing checks bring coverage to 86%. All are planned for v3.0, but frankly the 25 implemented checks catch most of what matters for technical SEO.
+The current 25 checks cover the most critical aspects of technical SEO that directly impact search engine crawling, indexing, and ranking.
 
 ---
 
@@ -343,45 +411,187 @@ list_seo_queries({
 
 ## Available Queries
 
-The analysis engine includes 28 predefined SQL queries organised by category:
+The analysis engine includes 28 predefined SQL queries organised by category. Each query includes detailed impact analysis and fix recommendations.
 
-**Critical (4):**
-- missing-titles
-- broken-internal-links  
-- server-errors
-- not-found-errors
+### Critical Issues (4 queries)
 
-**Content (7):**
-- duplicate-titles
-- duplicate-descriptions
-- duplicate-h1s
-- missing-descriptions
-- missing-h1s
-- multiple-h1s
-- thin-content
+**missing-titles**
+- **What it finds:** Pages without title tags
+- **Why it matters:** Title tags are the most important on-page SEO element. Without them, pages are essentially invisible to search engines.
+- **Fix:** Add unique, descriptive title tags (50-60 characters) to all pages immediately.
 
-**Technical (5):**
-- redirect-pages
-- redirect-chains
-- orphan-pages
-- canonical-issues
-- non-https-pages
+**broken-internal-links**
+- **What it finds:** Internal links pointing to 404/5xx error pages
+- **Why it matters:** Broken links hurt crawlability and waste crawl budget. They create dead ends for users and search engines.
+- **Fix:** Update or remove broken links. Add redirects for moved pages.
 
-**Security (6):**
-- missing-csp
-- missing-hsts
-- missing-x-frame-options
-- missing-referrer-policy
-- unsafe-external-links
-- protocol-relative-links
+**server-errors**
+- **What it finds:** Pages returning 5xx status codes
+- **Why it matters:** Indicates server problems that prevent search engines from indexing content.
+- **Fix:** Investigate server issues, check error logs, ensure adequate resources.
 
-**Opportunities (6):**
-- title-length-issues
-- description-length-issues
-- title-equals-h1
-- no-outbound-links
-- high-external-links
-- missing-images
+**not-found-errors**
+- **What it finds:** Pages returning 404 status codes
+- **Why it matters:** Lost indexing opportunities and poor user experience.
+- **Fix:** Add 301 redirects or remove links to non-existent pages.
+
+### Content Quality (7 queries)
+
+**duplicate-titles**
+- **What it finds:** Multiple pages sharing identical title tags
+- **Why it matters:** Confuses search engines about which page to rank for queries.
+- **Fix:** Make each page's title tag unique and descriptive of its specific content.
+
+**duplicate-descriptions**
+- **What it finds:** Multiple pages with identical meta descriptions
+- **Why it matters:** Reduces click-through rates as snippets look identical in search results.
+- **Fix:** Write unique meta descriptions (150-160 characters) for each page.
+
+**duplicate-h1s**
+- **What it finds:** Multiple pages sharing the same H1 heading
+- **Why it matters:** H1 tags signal page topic - duplicates dilute topical clarity.
+- **Fix:** Ensure each page has a unique H1 that accurately describes its content.
+
+**missing-descriptions**
+- **What it finds:** Pages without meta description tags
+- **Why it matters:** Search engines create their own snippets, often poorly representing content.
+- **Fix:** Add compelling meta descriptions (150-160 characters) for all important pages.
+
+**missing-h1s**
+- **What it finds:** Pages without H1 headings
+- **Why it matters:** H1 is a primary signal of page topic and structure.
+- **Fix:** Add descriptive H1 tags to all content pages.
+
+**multiple-h1s**
+- **What it finds:** Pages with more than one H1 tag
+- **Why it matters:** Dilutes topical focus and confuses heading hierarchy.
+- **Fix:** Use only one H1 per page. Convert other H1s to H2 or H3.
+
+**thin-content**
+- **What it finds:** Pages with less than 300 words of content
+- **Why it matters:** Thin content provides little value and ranks poorly.
+- **Fix:** Expand content with valuable information or consolidate into existing pages.
+
+### Technical SEO (5 queries)
+
+**redirect-pages**
+- **What it finds:** Pages that redirect to other URLs
+- **Why it matters:** Multiple redirects waste crawl budget and slow page loads.
+- **Fix:** Update internal links to point directly to final destination.
+
+**redirect-chains**
+- **What it finds:** URLs that redirect multiple times before reaching destination
+- **Why it matters:** Each redirect adds latency and risks breaking the chain.
+- **Fix:** Implement direct redirects from source to final destination.
+
+**orphan-pages**
+- **What it finds:** Pages with no internal links pointing to them
+- **Why it matters:** Search engines may never discover orphan pages.
+- **Fix:** Add internal links from relevant pages to connect orphans to site structure.
+
+**canonical-issues**
+- **What it finds:** Pages where canonical URL doesn't match actual URL
+- **Why it matters:** Signals duplicate content or indexing preference conflicts.
+- **Fix:** Ensure canonical tags point to the correct version of each page.
+
+**non-https-pages**
+- **What it finds:** Pages still using HTTP instead of HTTPS
+- **Why it matters:** Security risk, ranking penalty, and browser warnings.
+- **Fix:** Implement HTTPS across entire site with proper redirects.
+
+### Security (6 queries)
+
+**missing-csp**
+- **What it finds:** Pages without Content-Security-Policy headers
+- **Why it matters:** Vulnerability to XSS attacks and code injection.
+- **Fix:** Implement CSP headers to control resource loading.
+
+**missing-hsts**
+- **What it finds:** Pages without Strict-Transport-Security headers
+- **Why it matters:** Allows protocol downgrade attacks.
+- **Fix:** Add HSTS headers to enforce HTTPS connections.
+
+**missing-x-frame-options**
+- **What it finds:** Pages without X-Frame-Options headers
+- **Why it matters:** Vulnerability to clickjacking attacks.
+- **Fix:** Add X-Frame-Options headers (DENY or SAMEORIGIN).
+
+**missing-referrer-policy**
+- **What it finds:** Pages without Referrer-Policy headers
+- **Why it matters:** Potential privacy and security leakage.
+- **Fix:** Implement appropriate referrer policy for your use case.
+
+**unsafe-external-links**
+- **What it finds:** Links with target="_blank" but without rel="noopener"
+- **Why it matters:** Security vulnerability allowing opened page to control opener window.
+- **Fix:** Add rel="noopener noreferrer" to all target="_blank" links.
+
+**protocol-relative-links**
+- **What it finds:** Links using // instead of https://
+- **Why it matters:** Can cause mixed content issues and security warnings.
+- **Fix:** Use absolute HTTPS URLs for all external resources.
+
+### Optimisation Opportunities (6 queries)
+
+**title-length-issues**
+- **What it finds:** Title tags shorter than 30 characters or longer than 60
+- **Why it matters:** Too short titles waste opportunity; too long get truncated in search results.
+- **Fix:** Aim for 50-60 characters for optimal display in search results.
+
+**description-length-issues**
+- **What it finds:** Meta descriptions shorter than 120 or longer than 160 characters
+- **Why it matters:** Poor descriptions reduce click-through rates.
+- **Fix:** Write descriptions between 150-160 characters for full display.
+
+**title-equals-h1**
+- **What it finds:** Pages where title tag matches H1 exactly
+- **Why it matters:** Missed opportunity to target different keywords or angles.
+- **Fix:** Make title and H1 complementary but not identical for broader keyword coverage.
+
+**no-outbound-links**
+- **What it finds:** Pages with zero external links
+- **Why it matters:** Can appear spammy or siloed; linking to quality sources builds trust.
+- **Fix:** Add relevant external links to authoritative sources where appropriate.
+
+**high-external-links**
+- **What it finds:** Pages with excessive external links (20+)
+- **Why it matters:** Can appear spammy and leaks PageRank unnecessarily.
+- **Fix:** Reduce external links to most relevant and valuable resources.
+
+**missing-images**
+- **What it finds:** Pages without any images
+- **Why it matters:** Images improve engagement and provide additional ranking signals.
+- **Fix:** Add relevant, optimized images with proper alt text.
+
+---
+
+### Using Queries
+
+**In Claude Desktop:**
+```
+List all available queries
+Show me the critical queries only
+Run the missing-titles query on my crawl
+What does the orphan-pages query check for?
+```
+
+**In CLI:**
+```bash
+# List all queries
+crawlee-mcp queries
+
+# Filter by category
+crawlee-mcp queries --category=security
+
+# Filter by priority
+crawlee-mcp queries --priority=CRITICAL
+```
+
+Each query returns:
+- Affected URLs
+- Relevant context (word count, status codes, etc.)
+- Count of affected pages
+- Organized by severity
 
 ---
 
@@ -401,6 +611,12 @@ npm test
 ---
 
 ## Version History
+
+### v2.0.1 (2026-02-02)
+- Fixed MemoryStorage cleanup bug (added explicit purge in finally block)
+- Added CLI mode for terminal-based crawling
+- Removed Screaming Frog references from documentation
+- Ensures guaranteed fresh state between consecutive crawls
 
 ### v2.0.0 (2026-02-01)
 - Added comprehensive SQL-based analysis engine
