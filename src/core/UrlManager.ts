@@ -29,10 +29,6 @@ export class UrlManager {
         clean += parsed.search;
       }
       
-      if (clean.endsWith('/') && clean.length > clean.indexOf('://') + 4) {
-        clean = clean.slice(0, -1);
-      }
-      
       return clean;
     } catch {
       return url;

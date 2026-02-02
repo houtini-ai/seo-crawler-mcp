@@ -69,10 +69,6 @@ export class LinkExtractor {
       clean += url.search;
     }
     
-    if (clean.endsWith('/') && clean.length > clean.indexOf('://') + 4) {
-      clean = clean.slice(0, -1);
-    }
-    
     return clean;
   }
 
