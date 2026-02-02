@@ -1,19 +1,19 @@
 {
-  "name": "@houtini/crawlee-mcp",
+  "name": "@houtini/seo-crawler-mcp",
   "version": "2.0.1",
-  "mcpName": "io.github.houtini-ai/crawlee-mcp",
+  "mcpName": "io.github.houtini-ai/seo-crawler-mcp",
   "description": "Crawl and analyse websites for SEO errors and issues using Crawlee with SQLite storage",
   "type": "module",
   "main": "build/index.js",
   "bin": {
-    "crawlee-mcp": "build/cli.js"
+    "seo-crawler-mcp": "build/cli.js"
   },
-  "author": "Richard Baxter <richard@houtini.ai>",
+  "author": "Richard Baxter <hello@houtini.com>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/houtini-ai/crawlee-mcp-seo-crawler",
+  "homepage": "https://github.com/houtini-ai/seo-crawler-mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/houtini-ai/crawlee-mcp-seo-crawler.git"
+    "url": "https://github.com/houtini-ai/seo-crawler-mcp.git"
   },
   "keywords": [
     "mcp",

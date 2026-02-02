@@ -1,11 +1,11 @@
-# Crawlee MCP - an SEO Site Crawler for LLMs
+# SEO Crawler MCP - Website Crawler & SEO Analyzer for LLMs
 
-[![npm version](https://img.shields.io/npm/v/@houtini/crawlee-mcp.svg)](https://www.npmjs.com/package/@houtini/crawlee-mcp)
-[![npm downloads](https://img.shields.io/npm/dm/@houtini/crawlee-mcp.svg)](https://www.npmjs.com/package/@houtini/crawlee-mcp)
-[![Build Status](https://github.com/houtini-ai/crawlee-mcp-seo-crawler/workflows/CI/badge.svg)](https://github.com/houtini-ai/crawlee-mcp-seo-crawler/actions)
+[![npm version](https://img.shields.io/npm/v/@houtini/seo-crawler-mcp.svg)](https://www.npmjs.com/package/@houtini/seo-crawler-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/@houtini/seo-crawler-mcp.svg)](https://www.npmjs.com/package/@houtini/seo-crawler-mcp)
+[![Build Status](https://github.com/houtini-ai/seo-crawler-mcp/workflows/CI/badge.svg)](https://github.com/houtini-ai/seo-crawler-mcp/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Type Definitions](https://img.shields.io/badge/types-included-blue)](https://www.npmjs.com/package/@houtini/crawlee-mcp)
-[![Known Vulnerabilities](https://snyk.io/test/github/houtini-ai/crawlee-mcp-seo-crawler/badge.svg)](https://snyk.io/test/github/houtini-ai/crawlee-mcp-seo-crawler)
+[![Type Definitions](https://img.shields.io/badge/types-included-blue)](https://www.npmjs.com/package/@houtini/seo-crawler-mcp)
+[![Known Vulnerabilities](https://snyk.io/test/github/houtini-ai/seo-crawler-mcp/badge.svg)](https://snyk.io/test/github/houtini-ai/seo-crawler-mcp)
 [![MCP Registry](https://img.shields.io/badge/MCP-Registry-blue?style=flat-square)](https://registry.modelcontextprotocol.io)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -48,9 +48,9 @@ Add this to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "crawlee-mcp": {
+    "seo-crawler-mcp": {
       "command": "npx",
-      "args": ["-y", "@houtini/crawlee-mcp"],
+      "args": ["-y", "@houtini/seo-crawler-mcp"],
       "env": {
         "OUTPUT_DIR": "C:\\seo-audits"
       }
@@ -60,15 +60,15 @@ Add this to your Claude Desktop config file:
 ```
 
 Restart Claude Desktop. Four tools will be available:
-- `crawlee-mcp:run_seo_audit`
-- `crawlee-mcp:analyze_seo`
-- `crawlee-mcp:query_seo_data`
-- `crawlee-mcp:list_seo_queries`
+- `seo-crawler-mcp:run_seo_audit`
+- `seo-crawler-mcp:analyze_seo`
+- `seo-crawler-mcp:query_seo_data`
+- `seo-crawler-mcp:list_seo_queries`
 
 ### Development Install
 
 ```bash
-cd C:\MCP\crawlee-mcp
+cd C:\MCP\seo-crawler-mcp
 npm install
 npm run build
 ```
@@ -78,11 +78,44 @@ Then use the local path in your config:
 ```json
 {
   "mcpServers": {
-    "crawlee-mcp": {
+    "seo-crawler-mcp": {
       "command": "node",
-      "args": ["C:\\MCP\\crawlee-mcp\\build\\index.js"],
+      "args": ["C:\\MCP\\seo-crawler-mcp\\build\\index.js"],
       "env": {
-        "OUTPUT_DIR": "C:\\seo-audits"
+        "OUTPUT_DIR": "C:\\seo-audits",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+**Environment Variables:**
+- `OUTPUT_DIR`: Directory where crawl results are saved (required)
+- `DEBUG`: Set to `"true"` to enable verbose debug logging (optional, default: `"false"`)
+
+**CLI Usage for Local Development:**
+
+When running the CLI from a local build (not installed via npm), use `node` directly:
+
+```bash
+# Run crawl
+node C:\MCP\seo-crawler-mcp\build\cli.js crawl https://example.com --max-pages=20
+
+# Analyze results
+node C:\MCP\seo-crawler-mcp\build\cli.js analyze C:\seo-audits\example.com_2026-02-02_abc123
+
+# List queries
+node C:\MCP\seo-crawler-mcp\build\cli.js queries --category=critical
+```
+
+---
+
+## CLI Mode (Terminal Usage)
+
+For large crawls or background processing, you can run crawls directly from the terminal.
+
+**Note:** These examples use `npx` for globally installed packages. For local development, see the "Development Install" section above.
       }
     }
   }
@@ -99,43 +132,43 @@ For large crawls or background processing, you can run crawls directly from the 
 
 ```bash
 # Basic crawl
-npx @houtini/crawlee-mcp crawl https://example.com
+npx @houtini/seo-crawler-mcp crawl https://example.com
 
 # Large crawl with custom settings
-npx @houtini/crawlee-mcp crawl https://example.com --max-pages=5000 --depth=5
+npx @houtini/seo-crawler-mcp crawl https://example.com --max-pages=5000 --depth=5
 
 # Using Googlebot user agent
-npx @houtini/crawlee-mcp crawl https://example.com --user-agent=googlebot
+npx @houtini/seo-crawler-mcp crawl https://example.com --user-agent=googlebot
 ```
 
 ### Quick Analysis
 
 ```bash
 # Show summary statistics
-npx @houtini/crawlee-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123
+npx @houtini/seo-crawler-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123
 
 # Detailed JSON output
-npx @houtini/crawlee-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123 --format=detailed
+npx @houtini/seo-crawler-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123 --format=detailed
 ```
 
 ### List Available Queries
 
 ```bash
 # All queries
-npx @houtini/crawlee-mcp queries
+npx @houtini/seo-crawler-mcp queries
 
 # Security queries only
-npx @houtini/crawlee-mcp queries --category=security
+npx @houtini/seo-crawler-mcp queries --category=security
 
 # Critical priority queries
-npx @houtini/crawlee-mcp queries --priority=CRITICAL
+npx @houtini/seo-crawler-mcp queries --priority=CRITICAL
 ```
 
 ### Workflow: Terminal + Claude
 
 1. **Run large crawl from terminal** (runs in background, can close terminal)
    ```bash
-   npx @houtini/crawlee-mcp crawl https://bigsite.com --max-pages=5000
+   npx @houtini/seo-crawler-mcp crawl https://bigsite.com --max-pages=5000
    ```
 
 2. **Get the output path** from the crawl results
@@ -167,7 +200,7 @@ The typical workflow goes like this:
 
 1. **Crawl the website**
    ```
-   Use crawlee-mcp to crawl https://example.com with maxPages=2000
+   Use seo-crawler-mcp to crawl https://example.com with maxPages=2000
    ```
 
 2. **Run the analysis**
@@ -253,13 +286,13 @@ The crawler stores everything in SQLite databases organised by domain and date:
 
 ```
 C:/seo-audits/example.com_2026-02-01_abc123/
-├── crawl-data.db          # SQLite database
-│   ├── pages              # Every page crawled
-│   ├── links              # All link relationships
-│   ├── errors             # Crawl errors
-│   └── crawl_metadata     # Statistics
-├── config.json            # Crawl settings
-└── crawl-export.csv       # Optional CSV export
+â”œâ”€â”€ crawl-data.db          # SQLite database
+â”‚   â”œâ”€â”€ pages              # Every page crawled
+â”‚   â”œâ”€â”€ links              # All link relationships
+â”‚   â”œâ”€â”€ errors             # Crawl errors
+â”‚   â””â”€â”€ crawl_metadata     # Statistics
+â”œâ”€â”€ config.json            # Crawl settings
+â””â”€â”€ crawl-export.csv       # Optional CSV export
 ```
 
 I've tested this on my simracingcockpit.gg site - 1,828 pages, 298,708 link relationships, crawled in 15 minutes. Database came out at 15MB. The analysis queries run in under 600ms even on the full dataset.
@@ -578,13 +611,13 @@ What does the orphan-pages query check for?
 **In CLI:**
 ```bash
 # List all queries
-crawlee-mcp queries
+seo-crawler-mcp queries
 
 # Filter by category
-crawlee-mcp queries --category=security
+seo-crawler-mcp queries --category=security
 
 # Filter by priority
-crawlee-mcp queries --priority=CRITICAL
+seo-crawler-mcp queries --priority=CRITICAL
 ```
 
 Each query returns:
@@ -615,12 +648,12 @@ npm test
 ### v2.0.1 (2026-02-02)
 - Fixed MemoryStorage cleanup bug (added explicit purge in finally block)
 - Added CLI mode for terminal-based crawling
-- Removed Screaming Frog references from documentation
+- Removed proprietary tool references from documentation
 - Ensures guaranteed fresh state between consecutive crawls
 
 ### v2.0.0 (2026-02-01)
 - Added comprehensive SQL-based analysis engine
-- 28 SEO queries covering 25 out of 29 Screaming Frog checks
+- 28 SEO queries covering industry-standard audit requirements
 - Three analysis tools: analyze_seo, query_seo_data, list_seo_queries
 - 86% coverage of standard SEO audit requirements
 
@@ -650,8 +683,8 @@ See NOTICE file for details.
 
 ## Support
 
-**GitHub:** https://github.com/houtini-ai/crawlee-mcp-seo-crawler  
-**Issues:** https://github.com/houtini-ai/crawlee-mcp-seo-crawler/issues  
+**GitHub:** https://github.com/houtini-ai/seo-crawler-mcp-seo-crawler  
+**Issues:** https://github.com/houtini-ai/seo-crawler-mcp-seo-crawler/issues  
 **Author:** Richard Baxter <richard@houtini.ai>
 
 ---

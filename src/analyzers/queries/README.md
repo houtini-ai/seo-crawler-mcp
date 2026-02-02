@@ -103,7 +103,7 @@ All queries follow a standard format:
 16. **heading-hierarchy-issues.sql** - Non-sequential headings
     - Priority: MEDIUM
     - Impact: Poor document structure
-    - Fix: Correct heading order (h1 → h2 → h3)
+    - Fix: Correct heading order (h1 â†’ h2 â†’ h3)
 
 ## Security Issues (6 queries)
 
@@ -209,7 +209,7 @@ const report = await analyzer.generateReport();
 
 ### MCP Tool Integration
 ```bash
-crawlee-mcp:analyze_seo crawlId="431841d4"
+seo-crawler-mcp:analyze_seo crawlId="431841d4"
 # Returns JSON report with all 25 issues checked
 ```
 

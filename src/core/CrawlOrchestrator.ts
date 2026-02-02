@@ -20,6 +20,7 @@ import { UrlManager } from './UrlManager.js';
 import { ContentExtractor } from './ContentExtractor.js';
 import { LinkExtractor } from './LinkExtractor.js';
 import { CrawlStorage } from './CrawlStorage.js';
+import { debug } from '../utils/debug.js';
 
 export class CrawlOrchestrator {
   private crawler: any;
@@ -124,27 +125,27 @@ export class CrawlOrchestrator {
 
   async run(): Promise<CrawlMetadata> {
     try {
-      console.error('[ORCH DEBUG] Starting orchestrator.run()');
-      console.error('[ORCH DEBUG] Config:', JSON.stringify(this.config, null, 2));
+      debug('[ORCH] Starting orchestrator.run()');
+      debug('[ORCH] Config:', JSON.stringify(this.config, null, 2));
       
       // Initialize crawler with isolated storage
       await this.initializeCrawler();
-      console.error('[ORCH DEBUG] Crawler initialized with isolated MemoryStorage');
+      debug('[ORCH] Crawler initialized with isolated MemoryStorage');
       
       await this.storage.initialize();
-      console.error('[ORCH DEBUG] Storage initialized');
+      debug('[ORCH] Storage initialized');
       
       this.metadata.status = 'running';
       this.metadata.startedAt = new Date().toISOString();
       await this.storage.saveMetadata(this.metadata, this.config);
-      console.error('[ORCH DEBUG] Metadata saved, status=running');
+      debug('[ORCH] Metadata saved, status=running');
       
       this.urlManager.addDiscovered(this.config.startUrl, 0);
-      console.error('[ORCH DEBUG] Start URL added to UrlManager');
+      debug('[ORCH] Start URL added to UrlManager');
       
-      console.error('[ORCH DEBUG] About to call crawler.run()...');
+      debug('[ORCH] About to call crawler.run()...');
       await this.crawler.run([this.config.startUrl]);
-      console.error('[ORCH DEBUG] Crawler.run() completed');
+      debug('[ORCH] Crawler.run() completed');
       
       if (this.linkBuffer.length > 0) {
         await this.storage.saveLinkData(this.linkBuffer);
@@ -178,7 +179,7 @@ export class CrawlOrchestrator {
       if (this.memoryStorage) {
         try {
           await this.memoryStorage.purge();
-          console.error('[ORCH DEBUG] MemoryStorage cleaned up successfully');
+          debug('[ORCH] MemoryStorage cleaned up successfully');
         } catch (cleanupError: any) {
           console.error('[ORCH WARN] Storage cleanup failed:', cleanupError.message);
         }

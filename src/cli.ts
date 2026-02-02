@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * Crawlee MCP - CLI Mode
+ * SEO Crawler MCP - CLI Mode
  * 
  * Run crawls directly from terminal, then analyze with Claude via MCP
  * 
  * Usage:
- *   npx @houtini/crawlee-mcp crawl https://example.com --max-pages=100 --depth=3
+ *   npx @houtini/seo-crawler-mcp crawl https://example.com --max-pages=100 --depth=3
  *   
  * Then in Claude:
  *   "Analyze the crawl at C:/seo-audits/example.com_2026-02-02_abc123"
@@ -20,12 +20,12 @@ const args = process.argv.slice(2);
 
 if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   console.log(`
-Crawlee MCP - CLI Mode
+SEO Crawler MCP - CLI Mode
 
 USAGE:
-  crawlee-mcp crawl <url> [options]        Run a crawl
-  crawlee-mcp analyze <path> [options]     Analyze a crawl
-  crawlee-mcp queries [options]            List available queries
+  seo-crawler-mcp crawl <url> [options]        Run a crawl
+  seo-crawler-mcp analyze <path> [options]     Analyze a crawl
+  seo-crawler-mcp queries [options]            List available queries
 
 CRAWL OPTIONS:
   --max-pages=<number>      Maximum pages to crawl (default: 1000)
@@ -39,16 +39,16 @@ ANALYZE OPTIONS:
 
 EXAMPLES:
   # Run a crawl
-  crawlee-mcp crawl https://example.com --max-pages=500 --depth=5
+  seo-crawler-mcp crawl https://example.com --max-pages=500 --depth=5
   
   # Analyze a crawl
-  crawlee-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123
+  seo-crawler-mcp analyze C:/seo-audits/example.com_2026-02-01_abc123
   
   # List all queries
-  crawlee-mcp queries
+  seo-crawler-mcp queries
   
   # List security queries
-  crawlee-mcp queries --category=security
+  seo-crawler-mcp queries --category=security
 
 WORKFLOW:
   1. Run crawl from terminal (for large sites or background processing)
@@ -96,7 +96,7 @@ async function main() {
         
         if (!params.url) {
           console.error('Error: URL is required');
-          console.error('Usage: crawlee-mcp crawl <url> [options]');
+          console.error('Usage: seo-crawler-mcp crawl <url> [options]');
           process.exit(1);
         }
         
@@ -132,7 +132,7 @@ async function main() {
         console.log(`  "Analyze the crawl at ${result.outputPath}"`);
         console.log('');
         console.log('  Or use CLI:');
-        console.log(`  crawlee-mcp analyze ${result.outputPath}`);
+        console.log(`  seo-crawler-mcp analyze ${result.outputPath}`);
         
         break;
       }
@@ -142,7 +142,7 @@ async function main() {
         
         if (!params.crawlPath) {
           console.error('Error: Crawl path is required');
-          console.error('Usage: crawlee-mcp analyze <path> [options]');
+          console.error('Usage: seo-crawler-mcp analyze <path> [options]');
           process.exit(1);
         }
         
@@ -206,7 +206,7 @@ async function main() {
       
       default:
         console.error(`Unknown command: ${command}`);
-        console.error('Run "crawlee-mcp --help" for usage');
+        console.error('Run "seo-crawler-mcp --help" for usage');
         process.exit(1);
     }
     

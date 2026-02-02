@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 import { QueryLoader } from '../analyzers/QueryLoader.js';
-import { StructuredReportFormatter } from '../formatters/screaming-frog-format.js';
+import { StructuredReportFormatter } from '../formatters/structured-report-format.js';
 
 interface AnalyzeSeoParams {
   crawlPath: string;

@@ -11,15 +11,16 @@ import { ContentExtractor } from '../core/ContentExtractor.js';
 import { LinkExtractor } from '../core/LinkExtractor.js';
 import { CrawlStorage } from '../core/CrawlStorage.js';
 import { CrawlOrchestrator } from '../core/CrawlOrchestrator.js';
+import { debug } from '../utils/debug.js';
 
 export async function runSeoAudit(params: RunSeoAuditInput): Promise<RunSeoAuditOutput> {
   // DEBUG: Log raw incoming parameters
-  console.error('[MCP DEBUG] Raw params received:', JSON.stringify(params, null, 2));
+  debug('[MCP] Raw params received:', JSON.stringify(params, null, 2));
   
   const validated = RunSeoAuditInputSchema.parse(params);
   
   // DEBUG: Log validated parameters
-  console.error('[MCP DEBUG] Validated params:', JSON.stringify(validated, null, 2));
+  debug('[MCP] Validated params:', JSON.stringify(validated, null, 2));
   
   const crawlId = randomUUID();
   
@@ -49,7 +50,7 @@ export async function runSeoAudit(params: RunSeoAuditInput): Promise<RunSeoAudit
   };
   
   // DEBUG: Log final config being passed to orchestrator
-  console.error('[MCP DEBUG] Final crawl config:', JSON.stringify(config, null, 2));
+  debug('[MCP] Final crawl config:', JSON.stringify(config, null, 2));
   
   const storage = new CrawlStorage(outputPath, validated.url);
   await storage.initialize();
