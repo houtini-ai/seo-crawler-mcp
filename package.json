@@ -1,0 +1,47 @@
+{
+  "name": "@houtini/crawlee-mcp",
+  "version": "2.0.0",
+  "mcpName": "io.github.houtini-ai/crawlee-mcp",
+  "description": "Crawl and analyse websites for SEO errors and issues using Crawlee with SQLite storage",
+  "type": "module",
+  "main": "build/index.js",
+  "author": "Richard Baxter <richard@houtini.ai>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/houtini-ai/crawlee-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/houtini-ai/crawlee-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "seo",
+    "crawler",
+    "crawlee",
+    "audit",
+    "model-context-protocol"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node build/index.js",
+    "test": "npm run build && node test/integration.mjs",
+    "cleanup": "node cleanup-repo.mjs",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@crawlee/memory-storage": "^3.7.0",
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "crawlee": "^3.7.0",
+    "zod": "^3.25.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,25 @@
+node_modules/
+build/
+dist/
+*.log
+.env
+.DS_Store
+*.tsbuildinfo
+.vscode/
+.idea/
+storage/
+
+# Development files
+scope/
+docs/
+test/
+test-all-queries.mjs
+audit-schema.mjs
+check-schema.mjs
+check-tables.mjs
+BUG-FIX-SUMMARY.md
+BUGFIX-REQUESTQUEUE-2026-02-01.md
+CLEANUP_SUMMARY.md
+HANDOVER-2026-02-01.md
+CONTRIBUTING.md
+CHANGELOG.md
