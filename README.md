@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@houtini/crawlee-mcp.svg)](https://www.npmjs.com/package/@houtini/crawlee-mcp)
 [![MCP Registry](https://img.shields.io/badge/MCP-Registry-blue?style=flat-square)](https://registry.modelcontextprotocol.io)
-[![Known Vulnerabilities](https://snyk.io/test/github/houtini-ai/crawlee-mcp/badge.svg)](https://snyk.io/test/github/houtini-ai/crawlee-mcp)
+[![Known Vulnerabilities](https://snyk.io/test/github/houtini-ai/crawlee-mcp-seo-crawler/badge.svg)](https://snyk.io/test/github/houtini-ai/crawlee-mcp-seo-crawler)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 **Crawl and analyse your website for errors and issues that probably affect your site's SEO**
@@ -430,8 +430,8 @@ See NOTICE file for details.
 
 ## Support
 
-**GitHub:** https://github.com/houtini-ai/crawlee-mcp  
-**Issues:** https://github.com/houtini-ai/crawlee-mcp/issues  
+**GitHub:** https://github.com/houtini-ai/crawlee-mcp-seo-crawler  
+**Issues:** https://github.com/houtini-ai/crawlee-mcp-seo-crawler/issues  
 **Author:** Richard Baxter <richard@houtini.ai>
 
 ---

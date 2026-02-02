@@ -7,10 +7,10 @@
   "main": "build/index.js",
   "author": "Richard Baxter <richard@houtini.ai>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/houtini-ai/crawlee-mcp",
+  "homepage": "https://github.com/houtini-ai/crawlee-mcp-seo-crawler",
   "repository": {
     "type": "git",
-    "url": "https://github.com/houtini-ai/crawlee-mcp.git"
+    "url": "https://github.com/houtini-ai/crawlee-mcp-seo-crawler.git"
   },
   "keywords": [
     "mcp",
