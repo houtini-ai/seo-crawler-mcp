@@ -26,6 +26,10 @@ Claude (or your AI assistant of choice) can orchestrate this entire stack throug
 
 **You can also run crawls directly from the terminal** - perfect for large sites or background processing. The CLI mode lets you run a crawl, get the output directory, and then hand that over to Claude for AI-powered analysis via the MCP tools.
 
+### Credits
+
+The core crawling architecture is inspired by the logic and patterns from the [LibreCrawl](https://github.com/libre-crawl/core) project. We've adapted their proven crawling methodology for use within the MCP protocol whilst adding comprehensive SEO analysis capabilities.
+
 ---
 
 ## Installation
@@ -683,9 +687,9 @@ See NOTICE file for details.
 
 ## Support
 
-**GitHub:** https://github.com/houtini-ai/seo-crawler-mcp-seo-crawler  
-**Issues:** https://github.com/houtini-ai/seo-crawler-mcp-seo-crawler/issues  
-**Author:** Richard Baxter <richard@houtini.ai>
+**GitHub:** https://github.com/houtini-ai/seo-crawler-mcp  
+**Issues:** https://github.com/houtini-ai/seo-crawler-mcp/issues  
+**Author:** Richard Baxter <hello@houtini.com>
 
 ---
 
