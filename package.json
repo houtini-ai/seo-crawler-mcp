@@ -1,6 +1,6 @@
 {
   "name": "@houtini/seo-crawler-mcp",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "mcpName": "io.github.houtini-ai/seo-crawler-mcp",
   "description": "Crawl and analyse websites for SEO errors and issues using Crawlee with SQLite storage",
   "type": "module",
@@ -22,6 +22,14 @@
     "crawlee",
     "audit",
     "model-context-protocol"
+  ],
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "houtini-logo.jpg",
+    "server.json"
   ],
   "engines": {
     "node": ">=18.0.0"
