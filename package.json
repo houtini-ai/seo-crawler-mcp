@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@crawlee/memory-storage": "^3.7.0",
-    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.6.2",
     "cheerio": "^1.0.0-rc.12",
