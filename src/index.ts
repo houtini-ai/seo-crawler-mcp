@@ -7,16 +7,8 @@
 process.env.CRAWLEE_LOG_LEVEL = 'OFF';
 
 /**
- * Crawlee MCP Server v2
- * 
- * Professional website crawler and SEO analyzer
- * Built with @modelcontextprotocol/sdk and Crawlee
- * 
- * Phase 1: MCP server skeleton with tool registration ✅
- * Phase 2: Full crawling engine implementation ✅
- * Phase 3: SEO analysis layer ✅
- * Phase 4: Fixed RequestQueue persistence bug ✅
- * Phase 5: Cross-platform output path support ✅
+ * SEO Crawler MCP Server
+ * Website crawler and SEO analyzer built with Crawlee
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -33,7 +25,7 @@ import { querySeoData } from './tools/query-seo-data.js';
 import { listQueries } from './tools/list-queries.js';
 
 const SERVER_NAME = 'seo-crawler-mcp';
-const SERVER_VERSION = '2.1.0'; // Cross-platform output path support
+const SERVER_VERSION = '2.1.4';
 
 const tools: Tool[] = [
   {

@@ -643,14 +643,14 @@ export class CrawlDatabase {
     return result.count;
   }
 
-  saveError(error: CrawlError): void {
+  saveError(crawlId: string, error: CrawlError): void {
     const stmt = this.db.prepare(`
       INSERT INTO errors (crawl_id, url, error_type, error_message, timestamp)
       VALUES (?, ?, ?, ?, ?)
     `);
 
     stmt.run(
-      error.url,
+      crawlId,
       error.url,
       error.errorType,
       error.message,
