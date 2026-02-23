@@ -35,7 +35,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node --input-type=commonjs -e \"require('fs').cpSync('src/analyzers/queries','build/analyzers/queries',{recursive:true})\"",
     "dev": "tsc --watch",
     "start": "node build/index.js",
     "test": "npm run build && echo 'Build successful - all checks passed'",
