@@ -11,6 +11,12 @@
 
 **Crawl and analyse your website for errors and issues that probably affect your site's SEO**
 
+<p align="center">
+  <a href="https://glama.ai/mcp/servers/@houtini-ai/seo-crawler-mcp">
+    <img width="380" height="200" src="https://glama.ai/mcp/servers/@houtini-ai/seo-crawler-mcp/badge" alt="SEO Crawler MCP server" />
+  </a>
+</p>
+
 I wanted to build on my experience working with the MCP protocol SDK to see just how far we can extend an AI assistant's capabilities. I decided that I'd quite like to build a crawler to check my site's "technical SEO" health and came across Crawlee - which seemed like the ideal library to base the crawl component of my MCP.
 
 What's interesting is that MCP usually indicates a server connection of some sort. This is not so with SEO Crawler MCP. The MCP protocol is probably more powerful than I realised - this is a self-contained application wrapped in the MCP SDK that handles everything locally:
